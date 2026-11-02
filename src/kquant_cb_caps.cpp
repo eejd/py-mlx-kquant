@@ -34,7 +34,7 @@ bool plausible(int ops, int mb) {
 
 std::pair<int, int> get_cb_caps() {
   auto& d = mlx::core::metal::device(mlx::core::Device::gpu);
-  auto [ops, mb] = d.get_max_ops_mb_per_buffer();
+  auto [ops, mb] = d.get_default_max_ops_mb_per_buffer();
   return {ops, mb};
 }
 
@@ -44,7 +44,7 @@ std::pair<int, int> set_cb_caps(int max_ops, int max_mb) {
         "[mlx_kquant.set_cb_caps] caps must be in [1, 2^30].");
   }
   auto& d = mlx::core::metal::device(mlx::core::Device::gpu);
-  auto [prev_ops, prev_mb] = d.get_max_ops_mb_per_buffer();
+  auto [prev_ops, prev_mb] = d.get_default_max_ops_mb_per_buffer();
   if (!plausible(prev_ops, prev_mb)) {
     throw std::runtime_error(
         "[mlx_kquant.set_cb_caps] current caps read implausible; mlx "

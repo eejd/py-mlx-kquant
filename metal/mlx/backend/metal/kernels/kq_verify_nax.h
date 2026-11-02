@@ -1108,8 +1108,8 @@ METAL_FUNC void kq_verify_nax_impl(
   auto ca = op.template get_left_input_cooperative_tensor<T, half, float>();
   auto cb = op.template get_right_input_cooperative_tensor<T, half, float>();
   auto cc = op.template get_destination_cooperative_tensor<
-      decltype(ca),
-      decltype(cb),
+      metal::remove_addrspace_t<decltype(ca)>,
+      metal::remove_addrspace_t<decltype(cb)>,
       float>();
   for (short i = 0; i < 16; ++i) {
     cc[i] = 0.0f;
